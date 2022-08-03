@@ -64,18 +64,18 @@ fun calculateGameResult(computerChoice: String, userChoice: String) {
 }
 
 fun main() {
-    while (true) {
+    var gameContinues = true // Indicator whether the game continues
+    while (gameContinues) {
         println("Make your choice: enter \"rock\", \"paper\" or \"scissors\"")
         println("To exit enter \"quit\"")
         val userChoice = getUserChoice() // User enters its choice
-        // If user decides to quit, finish the game
         if (!userChoice.equals("quit", true)) {
             val computerChoice = getComputerChoice() // Computer makes its choice
             // Calculate game results and print them
             calculateGameResult(computerChoice, userChoice)
             println("------------------------------------") // Ask user for his choice again
             println("Make your choice: enter \"rock\", \"paper\" or \"scissors\"")
-        } else
-            break
+        } else // If user decides to quit, finish the game
+            gameContinues = false
     }
 }
