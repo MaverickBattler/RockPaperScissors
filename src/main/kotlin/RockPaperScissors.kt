@@ -10,11 +10,13 @@ fun getComputerChoice() : String = options[(Math.random() * options.size).toInt(
 // Get the user choice and check input for correctness
 fun getUserChoice() : String {
     while (true) {
-        val userChoice = readLine() // User inputs their choice
+        var userChoice = readLine() // User inputs their choice
         if (userChoice != null) {
+            // Lowercase the input to ignore the character case when comparing it
+            userChoice = userChoice.lowercase()
             for (option in options) {
                 // Check if user input is one of the choices or the keyword "quit"
-                if (userChoice.equals(option, true)  || userChoice.equals("quit", true))
+                if (userChoice == option  || userChoice == "quit")
                     return userChoice
             }
         }
@@ -28,20 +30,20 @@ fun calculateGameResult(computerChoice: String, userChoice: String) {
     println("Computer throws ${computerChoice.uppercase()}")
     println("You throw ${userChoice.uppercase()}")
     when (computerChoice) {
-        "rock" -> when {
-            userChoice.equals("rock", true) ->  gameResult = "Tie"
-            userChoice.equals("paper", true) -> gameResult =  "User"
-            userChoice.equals("scissors", true) -> gameResult = "Computer"
+        "rock" -> when (userChoice) {
+            "rock" ->  gameResult = "Tie"
+            "paper" -> gameResult =  "User"
+            "scissors" -> gameResult = "Computer"
         }
-        "paper" -> when {
-            userChoice.equals("rock", true) -> gameResult = "Computer"
-            userChoice.equals("paper", true) -> gameResult = "Tie"
-            userChoice.equals("scissors", true) -> gameResult = "User"
+        "paper" -> when (userChoice) {
+            "rock" -> gameResult = "Computer"
+            "paper" -> gameResult = "Tie"
+            "scissors" -> gameResult = "User"
         }
-        "scissors" -> when {
-            userChoice.equals("rock", true) -> gameResult = "User"
-            userChoice.equals("paper", true) -> gameResult = "Computer"
-            userChoice.equals("scissors", true) -> gameResult = "Tie"
+        "scissors" -> when (userChoice) {
+            "rock" -> gameResult = "User"
+            "paper" -> gameResult = "Computer"
+            "scissors" -> gameResult = "Tie"
         }
     }
     when (gameResult) {
@@ -65,9 +67,9 @@ fun calculateGameResult(computerChoice: String, userChoice: String) {
 
 fun main() {
     var gameContinues = true // Indicator whether the game continues
+    println("Make your choice: enter \"rock\", \"paper\" or \"scissors\"")
+    println("To exit enter \"quit\"")
     while (gameContinues) {
-        println("Make your choice: enter \"rock\", \"paper\" or \"scissors\"")
-        println("To exit enter \"quit\"")
         val userChoice = getUserChoice() // User enters its choice
         if (!userChoice.equals("quit", true)) {
             val computerChoice = getComputerChoice() // Computer makes its choice
